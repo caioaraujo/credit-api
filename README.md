@@ -1,4 +1,4 @@
-# Desafio Noverde - Engenheiro de Software Senior
+# Credit API
 
 ## Introdução
 A Noverde, sendo uma empresa de crédito pessoal, recebe diariamente milhares de solicitações de crédito. 
