@@ -20,3 +20,4 @@ class TestLoanService(TestCase):
         result = service.insert(data)
 
         self.assertIsInstance(result, Loan)
+        self.assertIsNotNone(result.id)
