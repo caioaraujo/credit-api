@@ -1,5 +1,11 @@
 # Credit API
 
+## About
+
+This is a Rest API developed by Caio Araújo with Python language, using Django and Django REST Framework.
+
+The proposal of this API is to calculate credit loan.
+
 ## Requirements
 - Python 3.8
 - Pipenv (`pip install pipenv`)
@@ -24,3 +30,8 @@ Then, apply the schema by running in the project root:
 In the project root run:
 
 `python manage.py runserver`
+
+## Tests
+To run all test cases, just run in the project root:
+
+`python manage.py test`

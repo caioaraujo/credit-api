@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from .models import Loan
 
 
@@ -18,9 +20,9 @@ class LoanService:
             name=name,
             cpf=cpf,
             birthdate=birthdate,
-            amount_asked=amount_asked,
+            amount_asked=Decimal(amount_asked),
             terms_asked=terms_asked,
-            income=income,
+            income=Decimal(income),
         )
 
         loan.save()
