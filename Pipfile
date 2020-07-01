@@ -9,6 +9,7 @@ verify_ssl = true
 django = "==3.0.7"
 djangorestframework = "==3.11.0"
 psycopg2-binary = "==2.8.5"
+coreapi = "==2.3.3"
 
 [requires]
 python_version = "3.8"

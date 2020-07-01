@@ -1,11 +1,13 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
-from .serializers import LoanInsertResponseSerializer
+from .serializers import LoanInsertResponseSerializer, LoanSerializer
 from .services import LoanService
 
 
 class LoanView(GenericAPIView):
+
+    serializer_class = LoanSerializer
 
     def post(self, request):
         params = request.data.copy()

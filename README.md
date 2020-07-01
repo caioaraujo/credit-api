@@ -31,6 +31,8 @@ In the project root run:
 
 `python manage.py runserver`
 
+Once server started, you may access the local server address (check the output of previous command) to check the API documentation
+
 ## Tests
 To run all test cases, just run in the project root:
 
