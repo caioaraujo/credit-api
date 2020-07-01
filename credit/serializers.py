@@ -10,7 +10,7 @@ class LoanSerializer(serializers.ModelSerializer):
     birthdate = serializers.DateField(required=True, help_text="Customer birthdate in format YYYY-MM-DD")
     amount = serializers.DecimalField(required=True, help_text="Amount asked", max_digits=6, decimal_places=2,
                                       source="amount_asked")
-    terms = serializers.IntegerField(required=True, help_text="Terms amount. Values allowed: 6, 9 or 12",
+    terms = serializers.IntegerField(required=True, help_text="Number of terms asked. Values allowed: 6, 9 or 12",
                                      source="terms_asked")
     income = serializers.DecimalField(required=True, help_text="Customer total income", max_digits=12, decimal_places=2)
 
