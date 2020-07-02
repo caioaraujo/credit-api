@@ -17,3 +17,7 @@ class TestLoanView(APITestCase):
         response = self.client.post('/v1/loan/', data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIsNotNone(response.data["id"])
+
+    def test_post_bad_request(self):
+        response = self.client.post('/v1/loan/', {})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
