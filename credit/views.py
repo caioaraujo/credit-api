@@ -3,7 +3,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from .exceptions import LoanException
-from .serializers import LoanInsertResponseSerializer, LoanSerializer
+from .serializers import LoanInsertResponseSerializer, LoanSerializer, LoanStatusSerializer
 from .services import LoanService
 
 
@@ -26,4 +26,7 @@ class LoanView(GenericAPIView):
 class LoanStatusView(GenericAPIView):
 
     def get(self, request, loan_id):
-        pass
+        data = LoanService().get_result(loan_id)
+        serialized = LoanStatusSerializer(data)
+
+        return Response(serialized.data)

@@ -53,3 +53,6 @@ class LoanService:
         income = data.get('income')
         if not income:
             self.errors.append({'income': REQUIRED_FIELD})
+
+    def get_result(self, loan_id):
+        return Loan.objects.get(id=loan_id)
