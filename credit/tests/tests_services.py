@@ -1,4 +1,5 @@
-from django.test import SimpleTestCase, TestCase
+from django.test import TestCase
+from model_mommy import mommy
 
 from ..exceptions import LoanException
 from ..models import Loan
@@ -50,3 +51,12 @@ class TestLoanService(TestCase):
 
         errors = exc.exception.args[0]
         self.assertIn({'amount': 'Out of limit allowed'}, errors)
+
+    def test_get_loans_in_process(self):
+        mommy.make('Loan', status='processing', _quantity=3)
+        mommy.make('Loan', status='completed', _quantity=5)
+
+        service = LoanService()
+        result = service.get_loans_in_process()
+        self.assertEqual(3, len(result))
+        [self.assertEqual('processing', loan.status) for loan in result]

@@ -56,3 +56,6 @@ class LoanService:
 
     def get_result(self, loan_id):
         return Loan.objects.get(id=loan_id)
+
+    def get_loans_in_process(self):
+        return Loan.objects.filter(status='processing')

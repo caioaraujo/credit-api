@@ -18,7 +18,7 @@ DATABASES = {'default': dj_database_url.config(default=os.environ['DATABASE_URL'
 # Celery configuration
 # https://docs.celeryproject.org/en/stable/userguide/configuration.html
 
-BROKER_URL = os.environ['BROKER_URL']
+CELERY_BROKER_URL = os.environ['BROKER_URL']
 CELERY_RESULT_BACKEND = os.environ['BROKER_URL']
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
