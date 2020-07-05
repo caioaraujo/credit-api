@@ -1,22 +1,23 @@
 # Celery tasks file
-from __future__ import absolute_import, unicode_literals
-
 from celery import shared_task
-
-from .services import LoanService
 
 
 @shared_task
-def validate_age():
-    loans_in_process = LoanService().get_loans_in_process()
-    return loans_in_process
+def validate_age(loan):
+    print(loan)
 
 
-# @shared_task
-# def validate_score():
-#     pass
-#
-#
-# @shared_task
-# def validate_commitment():
-#     pass
+
+@shared_task
+def validate_score(loan):
+    print(loan)
+
+
+@shared_task
+def validate_commitment(loan):
+    print(loan)
+
+
+def run_credit_pipeline(loan):
+    credit_pipeline = (validate_age.s(loan) | validate_score.s(loan) | validate_commitment.s(loan))
+    credit_pipeline.apply_async()

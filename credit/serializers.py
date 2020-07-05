@@ -27,6 +27,13 @@ class LoanInsertResponseSerializer(serializers.ModelSerializer):
         fields = ('id',)
 
 
+class CreditProcessSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Loan
+        fields = '__all__'
+
+
 class LoanStatusSerializer(serializers.ModelSerializer):
 
     amount = serializers.DecimalField(source='amount_approved', max_digits=6, decimal_places=2)

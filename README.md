@@ -4,7 +4,7 @@
 
 This is a Rest API developed by Caio Araújo with Python language, using Django and Django REST Framework.
 
-The proposal of this API is to calculate credit loan.
+The proposal of this API is to process credit loan with Celery with Redis as broker.
 
 ## Requirements
 - Python 3.8 (https://www.python.org/downloads/)
@@ -21,7 +21,7 @@ Install all dependencies listed in `Pipfile` by running:
 
 `pipenv install --dev`
 
-Also provide all environment variables listed in local.env with their respective values.
+Also provide all environment variables listed in `local.env` with their respective values.
 
 ### Database
 In your PostgreSQL instance, create a new dabase called `credit`. 
@@ -36,6 +36,11 @@ Make sure to run redis-server and configure its URL in `BROKEN_URL` envvar.
 To run redis-server, go to redis folder and run:
 
 `src/redis-server`
+
+### Celery
+In the project root, run:
+
+`celery worker -A credit_api --loglevel=info`
 
 ### Database
 Make sure set up your database and configure its URL in `DATABASE_URL` envvar.

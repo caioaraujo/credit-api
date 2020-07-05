@@ -1,3 +1,5 @@
+from unittest import mock
+
 from model_mommy import mommy
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -5,7 +7,9 @@ from rest_framework.test import APITestCase
 
 class TestLoanView(APITestCase):
 
-    def test_post_success(self):
+    @mock.patch('credit.views.run_credit_pipeline')
+    def test_post_success(self, mock_run_credit_pipeline):
+        mock_run_credit_pipeline.return_value = None
         data = {
             "name": "Test",
             "cpf": "11122233309",
