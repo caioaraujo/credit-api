@@ -1,0 +1,11 @@
+*.egg-info
+*.pot
+*.py[co]
+*.orig
+*.mo
+.coverage
+.env
+__pycache__
+__pycache__/
+/.idea/
+/htmlcov/

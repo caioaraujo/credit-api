@@ -1,0 +1,2 @@
+class LoanException(BaseException):
+    pass
