@@ -15,13 +15,13 @@ STATUS_PROCESSING = 'processing'
 def validate_age(loan):
     birthdate = datetime.strptime(loan['birthdate'], DATE_MASK)
     current_date = datetime.now()
-    years_diff = current_date.year - birthdate.year
+    age = current_date.year - birthdate.year
     if (
         birthdate.month < current_date.month or
         (birthdate.month == current_date.month and birthdate.day < current_date.day)
     ):
-        years_diff = years_diff - 1
-    if years_diff < 18:
+        age = age - 1
+    if age < 18:
         LoanService().refuse_loan(loan['id'], 'age')
         return loan, STATUS_COMPLETED
 

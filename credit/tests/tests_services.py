@@ -8,6 +8,9 @@ from ..services import LoanService
 
 class TestLoanService(TestCase):
 
+    def setUp(self):
+        self.service = LoanService()
+
     def _data_input(self):
         return {
             'name': 'Test',
@@ -19,19 +22,16 @@ class TestLoanService(TestCase):
         }
 
     def test_insert_success(self):
-        service = LoanService()
-
-        result = service.insert(self._data_input())
+        result = self.service.insert(self._data_input())
 
         self.assertIsInstance(result, Loan)
         self.assertIsNotNone(result.id)
 
     def test_insert_required_fields(self):
         required_field_error = 'Required field'
-        service = LoanService()
 
         with self.assertRaises(LoanException) as exc:
-            service.insert({})
+            self.service.insert({})
 
         errors = exc.exception.args[0]
         self.assertIn({'name': required_field_error}, errors)
@@ -42,12 +42,11 @@ class TestLoanService(TestCase):
         self.assertIn({'income': required_field_error}, errors)
 
     def test_insert_amount_out_of_limit(self):
-        service = LoanService()
         data = self._data_input()
         data['amount'] = '999.99'
 
         with self.assertRaises(LoanException) as exc:
-            service.insert(data)
+            self.service.insert(data)
 
         errors = exc.exception.args[0]
         self.assertIn({'amount': 'Out of limit allowed'}, errors)
@@ -56,7 +55,17 @@ class TestLoanService(TestCase):
         mommy.make('Loan', status='processing', _quantity=3)
         mommy.make('Loan', status='completed', _quantity=5)
 
-        service = LoanService()
-        result = service.get_loans_in_process()
+        result = self.service.get_loans_in_process()
         self.assertEqual(3, len(result))
         [self.assertEqual('processing', loan.status) for loan in result]
+
+    def test_refuse_loan(self):
+        loan_id = 'e18c4ddf-aa3d-44e0-bccd-1030c66757e2'
+        mommy.make('Loan', id=loan_id, status='processing')
+
+        self.service.refuse_loan(loan_id, 'age')
+
+        result = Loan.objects.get(id=loan_id)
+        self.assertEqual(result.status, 'completed')
+        self.assertEqual(result.refused_policy, 'age')
+        self.assertEqual(result.result, 'rejected')
