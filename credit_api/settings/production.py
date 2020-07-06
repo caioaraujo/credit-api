@@ -28,4 +28,5 @@ CELERY_TIMEZONE = 'America/Sao_Paulo'
 # Clients
 
 SCORE_URL = os.environ['SCORE_URL']
+COMMITMENT_URL = os.environ['COMMITMENT_URL']
 CREDIT_VALIDATION_TOKEN = os.environ['CREDIT_VALIDATION_TOKEN']
