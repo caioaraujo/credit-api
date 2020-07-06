@@ -40,7 +40,7 @@ To run redis-server, go to redis folder and run:
 ### Celery
 In the project root, run:
 
-`celery worker -A credit_api --loglevel=info`
+`celery worker -A credit_api`
 
 ### Database
 Make sure set up your database and configure its URL in `DATABASE_URL` envvar.

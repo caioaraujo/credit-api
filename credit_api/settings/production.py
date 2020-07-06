@@ -3,7 +3,7 @@ import dj_database_url
 from .common import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.getenv('DEBUG'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
@@ -24,3 +24,8 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'America/Sao_Paulo'
+
+# Clients
+
+SCORE_URL = os.environ['SCORE_URL']
+CREDIT_VALIDATION_TOKEN = os.environ['CREDIT_VALIDATION_TOKEN']
