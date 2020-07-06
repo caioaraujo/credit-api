@@ -1,9 +1,13 @@
-from django.test import TestCase
+from unittest import mock
+
+from django.conf import settings
+from django.test import SimpleTestCase, TestCase
+from kombu.utils import json
 from model_mommy import mommy
 
 from ..exceptions import LoanException
 from ..models import Loan
-from ..services import LoanService
+from ..services import CreditService, LoanService
 
 
 class TestLoanService(TestCase):
@@ -69,3 +73,21 @@ class TestLoanService(TestCase):
         self.assertEqual(result.status, 'completed')
         self.assertEqual(result.refused_policy, 'age')
         self.assertEqual(result.result, 'rejected')
+
+
+class TestCreditService(SimpleTestCase):
+
+    def setUp(self):
+        self.service = CreditService()
+
+    @mock.patch('credit.services.requests.post')
+    def test_get_credit_score(self, mock_post):
+        mock_post.return_value = mock.Mock(text=json.dumps({'score': 500}))
+        expected_url = settings.SCORE_URL
+        expected_token = settings.CREDIT_VALIDATION_TOKEN
+        cpf = '12345678901'
+
+        score = self.service.get_credit_score(cpf)
+
+        self.assertEqual(score, 500)
+        mock_post.assert_called_once_with(expected_url, json={"cpf": cpf}, headers={'x-api-key': expected_token})

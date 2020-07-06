@@ -51,7 +51,7 @@ class LoanService:
         loan_obj.status = self.STATUS_COMPLETED
         loan_obj.save(update_fields=['result', 'refused_policy', 'status'])
 
-    def approved_loan(self, loan_id, terms_approved, amount_approved):
+    def approve_loan(self, loan_id, terms_approved, amount_approved):
         loan_obj = Loan.objects.get(id=loan_id)
         loan_obj.result = self.RESULT_APPROVED
         loan_obj.status = self.STATUS_COMPLETED

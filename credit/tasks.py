@@ -66,7 +66,7 @@ def validate_commitment(s, *args):
 
     amount_approved = credit_service.calculate_amount_approved(amount_asked, terms_approved)
 
-    loan_service.approved_loan(loan['id'], terms_approved, amount_approved)
+    loan_service.approve_loan(loan['id'], terms_approved, amount_approved)
 
 
 def run_credit_pipeline(loan):

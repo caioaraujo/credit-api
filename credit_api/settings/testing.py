@@ -34,3 +34,9 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     )
 }
+
+# Clients
+
+SCORE_URL = 'www.test.com/score'
+COMMITMENT_URL = 'www.test.com/commitment'
+CREDIT_VALIDATION_TOKEN = 'abc123'
