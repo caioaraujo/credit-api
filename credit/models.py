@@ -21,6 +21,3 @@ class Loan(models.Model):
     refused_policy = models.CharField(max_length=10, null=True)
     amount_approved = models.DecimalField(decimal_places=2, max_digits=6, null=True)
     terms_approved = models.IntegerField(null=True)
-
-    def age(self):
-        return 34

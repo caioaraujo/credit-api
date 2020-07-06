@@ -1,4 +1,3 @@
-from django.db import transaction
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
@@ -17,13 +16,12 @@ class LoanView(GenericAPIView):
         params = request.data.copy()
 
         try:
-            with transaction.atomic():
-                # Process all rules and insert into database
-                data = LoanService().insert(params)
+            # Process all rules and insert into database
+            data = LoanService().insert(params)
 
-                # Send to pipline for processing
-                loan = CreditProcessSerializer(data)
-                run_credit_pipeline(loan.data)
+            # Send to pipline for processing
+            loan = CreditProcessSerializer(data)
+            run_credit_pipeline(loan.data)
 
             # Serialize the data
             serialized = LoanInsertResponseSerializer(data)
