@@ -114,9 +114,10 @@ class CreditService:
     def calculate_amount_approved(self, amount_asked, terms_approved):
         interest_rate = self._calculate_interest_rate(amount_asked, terms_approved)
 
-        return amount_asked * (
-                ((1 + interest_rate) ^ terms_approved * interest_rate) / ((1 + interest_rate) ^ terms_approved - 1)
-        )
+        numerator = Decimal(pow(1 + interest_rate, terms_approved)) * interest_rate
+        denominator = Decimal(pow(1 + interest_rate, terms_approved)) - Decimal('1')
+
+        return amount_asked * (numerator / denominator)
 
     def _calculate_interest_rate(self, amount_asked, terms):
         interest_rules = {
