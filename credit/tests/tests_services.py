@@ -1,3 +1,4 @@
+from decimal import Decimal
 from unittest import mock
 
 from django.conf import settings
@@ -74,6 +75,20 @@ class TestLoanService(TestCase):
         self.assertEqual(result.refused_policy, 'age')
         self.assertEqual(result.result, 'rejected')
 
+    def test_approve_loan(self):
+        loan_id = 'e18c4ddf-aa3d-44e0-bccd-1030c66757e2'
+        expected_amount_approved = Decimal('5000.70')
+        expected_terms_approved = 9
+        mommy.make('Loan', id=loan_id, status='processing')
+
+        self.service.approve_loan(loan_id, expected_terms_approved, expected_amount_approved)
+
+        result = Loan.objects.get(id=loan_id)
+        self.assertEqual(result.status, 'completed')
+        self.assertEqual(result.result, 'approved')
+        self.assertEqual(result.amount_approved, expected_amount_approved)
+        self.assertEqual(result.terms_approved, expected_terms_approved)
+
 
 class TestCreditService(SimpleTestCase):
 
@@ -90,4 +105,17 @@ class TestCreditService(SimpleTestCase):
         score = self.service.get_credit_score(cpf)
 
         self.assertEqual(score, 500)
+        mock_post.assert_called_once_with(expected_url, json={"cpf": cpf}, headers={'x-api-key': expected_token})
+
+    @mock.patch('credit.services.requests.post')
+    def test_get_commitment_pct(self, mock_post):
+        mock_post.return_value = mock.Mock(text=json.dumps({'commitment': '0.7'}))
+
+        expected_url = settings.COMMITMENT_URL
+        expected_token = settings.CREDIT_VALIDATION_TOKEN
+        cpf = '12345678901'
+
+        commitment = self.service.get_commitment_pct(cpf)
+
+        self.assertEqual(commitment, Decimal('0.7'))
         mock_post.assert_called_once_with(expected_url, json={"cpf": cpf}, headers={'x-api-key': expected_token})
