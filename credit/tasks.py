@@ -36,8 +36,7 @@ def validate_score(s, *args):
     if current_status == STATUS_COMPLETED:
         return loan, current_status
 
-    credit_service = CreditService()
-    credit_score = credit_service.get_credit_score(loan['cpf'])
+    credit_score = CreditService().get_credit_score(loan['cpf'])
 
     if credit_score < 600:
         LoanService().refuse_loan(loan['id'], 'score')
